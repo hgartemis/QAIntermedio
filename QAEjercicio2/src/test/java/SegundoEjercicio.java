@@ -5,7 +5,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-public class PrimerEjercicio {
+import java.util.concurrent.TimeUnit;
+
+public class SegundoEjercicio {
 
     public static void main(String[] args) {
 
@@ -34,13 +36,44 @@ public class PrimerEjercicio {
         String strDescripcion1 = "//*[@id='search']/div[1]/div[2]/div/span[3]/div[2]/div[3]/div/span/div/div/div/div/div[2]/h2/a/span";
         String strPrecio1 = "//*[@id='search']/div[1]/div[2]/div/span[3]/div[2]/div[3]/div/span/div/div/div/div/div[4]/div/div/div/a/span/span[2]";
 
-        String strAhorro = "//*[@id='search']/div[1]/div[2]/div/span[3]/div[2]/div[51]/div/span/div/div/div[3]/div[2]/span/span[2]/span[1]";
+        String strDescripcion2 = "//*[@id='search']/div[1]/div[2]/div/span[3]/div[2]/div[4]/div/span/div/div/div/div/div[2]/h2/a/span";
+        String strPrecio2 = "//*[@id='search']/div[1]/div[2]/div/span[3]/div[2]/div[4]/div/span/div/div/div/div/div[4]/div/div/div/a/span";
+
+        //String strDescuento = "//*[@id='search']/div[1]/div[2]/div/span[3]/div[2]/div[51]/div/span/div/div/div[3]/div[2]/span/span[2]/span[1]";
 
         WebElement oDescripcion1 = driver.findElement(By.xpath(strDescripcion1));
         WebElement oprecio1 = driver.findElement(By.xpath(strPrecio1));
 
-        System.out.println(oDescripcion1.getText());
-        System.out.println(oprecio1.getText());
+        WebElement oDescripcion2 = driver.findElement(By.xpath(strDescripcion2));
+        WebElement oprecio2 = driver.findElement(By.xpath(strPrecio2));
+
+        // Determino los valores y indico cual es mas barato
+        String precio1 = "//*[@id='search']/div[1]/div[2]/div/span[3]/div[2]/div[3]/div/span/div/div/div/div/div[4]/div/div/div/a/span/span[2]/span[2]";
+        String precio2 = "//*[@id='search']/div[1]/div[2]/div/span[3]/div[2]/div[4]/div/span/div/div/div/div/div[4]/div/div/div/a/span/span[2]/span[2]";
+
+        WebElement oValor1 = driver.findElement(By.xpath(precio1));
+        WebElement oValor2 = driver.findElement(By.xpath(precio2));
+
+        int valor1 = Integer.parseInt(oValor1.getText());
+        int valor2 = Integer.parseInt(oValor2.getText());
+
+        if (valor1 > valor2) {
+
+            System.out.println("La mejor opción de compra es: " + oDescripcion2.getText());
+            System.out.println(oprecio2.getText());
+
+        } else {
+
+            System.out.println("La mejor opción de compra es: " + oDescripcion1.getText());
+            System.out.println(oprecio1.getText());
+
+        }
+
+        try {
+            Thread.sleep(3000) ;
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         /* Selecciono la primera zapatilla */
         String cadenaSeleccion = "//*[@id='search']/div[1]/div[2]/div/span[3]/div[2]/div[3]/div/span/div/div/div/div/span/a/div/img";
@@ -49,18 +82,10 @@ public class PrimerEjercicio {
             System.out.println("aca");
             cadenaSeleccion = "//*[@id='search']/div[1]/div[2]/div/span[3]/div[2]/div[3]/div/span/div/div/span/a/div/img";
             seleccion = driver.findElement(By.xpath(cadenaSeleccion));
+
         }
         seleccion.click();
 
-        // Verifico si existe
-        if (driver.findElement(By.xpath(strAhorro)).isDisplayed()) {
-            WebElement oDescuento = driver.findElement(By.xpath(strAhorro));
-            System.out.println("El ahorro de descuento es:" + oDescuento.getText());
-        } else
-        {
-            System.out.println("Sin ahorro de descuento.");
-        }
-
-
     }
+
 }
